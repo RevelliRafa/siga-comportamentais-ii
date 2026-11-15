@@ -1,29 +1,23 @@
 package siga;
 
-import java.time.LocalDate;
+public class AtestadoFrequencia extends DocumentoAcademico {
 
-/**
- * DESLIZE 1 — terceira cópia do mesmo rito.
- *
- * Este documento é o único que NÃO leva assinatura digital — e a diferença
- * está perdida no meio do código duplicado, em vez de declarada.
- */
-public class AtestadoFrequencia {
+    @Override
+    protected String corpo(Aluno aluno) {
+        // Usamos apenas os métodos que realmente existem na classe Aluno
+        return "ATESTADO DE FREQUENCIA\n" +
+               aluno.getNome() +
+               "\nMatricula: " + aluno.getMatricula() +
+               "\nStatus: " + (aluno.isRegular() ? "Frequencia Regular" : "Frequencia Irregular");
+    }
 
-    public String emitir(Aluno aluno) {
-        if (!aluno.isRegular()) {
-            throw new IllegalStateException(
-                    "Aluno irregular: " + aluno.getMatricula());
-        }
+    @Override
+    protected String getTipoLog() {
+        return "FREQUENCIA";
+    }
 
-        StringBuilder documento = new StringBuilder();
-        documento.append("FATEC DE PORTO FERREIRA\n");
-        documento.append("Sistema de Gestao Academica\n---\n");
-        documento.append("ATESTADO DE FREQUENCIA\n")
-                 .append(aluno.getNome());
-        documento.append("\n---\nEmitido em ").append(LocalDate.now());
-
-        LogAcademico.registrar("ATESTADO", aluno);
-        return documento.toString();
+    @Override
+    protected boolean exigeAssinatura() {
+        return false;
     }
 }

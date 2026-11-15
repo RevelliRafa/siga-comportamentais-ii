@@ -72,3 +72,8 @@ Essa é a linha que distingue o **State** do **Strategy** da aula passada. Uma p
 Conforme a ficha de atividade prática: identificadores em português, um arquivo `.java` por classe pública, código formatado, entrega no repositório Git com README e commits descritivos. O uso de IA para gerar o código é proibido nesta atividade (ver seção 5.3 da ficha).
 
 > **Projeto Integrador — Etapa 2:** a entrega é **hoje**. Ela exige ao menos um padrão estrutural (Aulas 10 e 11) e ao menos um comportamental (Aulas 12 e 13), cada um com justificativa que descreva **o problema do SIGA antes de nomear o padrão**. O critério que mais pesa é a pertinência: dois padrões bem justificados valem mais que seis decorativos.
+## Respostas da Atividade
+
+### Etapa 1 — Localizar a inversão (Fase Red)
+* **Onde ocorre o erro:** Na classe `DeclaracaoVinculo`, o rito de emissão está fora de ordem. A chamada para registrar o log (`LogAcademico.registrar(...)`) está a acontecer **antes** da validação do aluno (`validar(...)`).
+* **Consequência observável:** Se um aluno estiver em situação irregular, a validação vai falhar e o documento não será gerado/impresso. No entanto, como o registo ocorreu primeiro, o sistema deixará um rastro fantasma no log acadêmico afirmando que o documento foi emitido, o que corrompe a auditoria do sistema.
