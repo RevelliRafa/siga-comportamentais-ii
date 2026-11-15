@@ -77,3 +77,7 @@ Conforme a ficha de atividade prática: identificadores em português, um arquiv
 ### Etapa 1 — Localizar a inversão (Fase Red)
 * **Onde ocorre o erro:** Na classe `DeclaracaoVinculo`, o rito de emissão está fora de ordem. A chamada para registrar o log (`LogAcademico.registrar(...)`) está a acontecer **antes** da validação do aluno (`validar(...)`).
 * **Consequência observável:** Se um aluno estiver em situação irregular, a validação vai falhar e o documento não será gerado/impresso. No entanto, como o registo ocorreu primeiro, o sistema deixará um rastro fantasma no log acadêmico afirmando que o documento foi emitido, o que corrompe a auditoria do sistema.
+### Etapas 4 e 5 — Padrão State
+* **Adição do estado "Concluída":** Para acrescentar este novo estado, foi necessário tocar em apenas **dois arquivos**: criar a nova classe `Concluida` e alterar a classe `Confirmada` para oferecer a transição para ela. A classe `Matricula` (o contexto) permaneceu intacta.
+* **Linha que distingue o State do Strategy:** `m.setSituacao(new Confirmada());`
+* **Porquê?** No padrão State, os próprios estados conhecem as regras de transição e mudam o estado do contexto de forma autônoma. No padrão Strategy da Aula 12, as estratégias de desconto não se conhecem nem trocam de estratégia sozinhas; elas apenas calculam um valor isoladamente.
